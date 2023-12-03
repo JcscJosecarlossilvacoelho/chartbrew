@@ -14,6 +14,7 @@ import "react-date-range/dist/theme/default.css"; // theme css file
 import { secondary } from "../../../config/colors";
 import determineType from "../../../modules/determineType";
 import * as operations from "../../../modules/filterOperations";
+import pt from "date-fns/locale/pt";
 
 function ChartFilters(props) {
   const {
@@ -108,7 +109,7 @@ function ChartFilters(props) {
                                     optionFilter[condition.id]
                                     || _getConditionValue(condition.id)
                                   }
-                                  placeholder="Enter a value or search"
+                                  placeholder="Insira a pesquisa"
                                   onChange={(e) => {
                                     setOptionFilter({
                                       ...optionFilter, [condition.id]: e.target.value
@@ -191,7 +192,7 @@ function ChartFilters(props) {
                                 auto
                                 size="sm"
                               >
-                                {(_getConditionValue(condition.id) && format(new Date(_getConditionValue(condition.id)), "Pp", { locale: enGB })) || "Select a date"}
+                                {(_getConditionValue(condition.id) && format(new Date(_getConditionValue(condition.id)), "Pp", { locale: enGB })) || "Selecione a data"}
                               </Button>
                               <Spacer x={0.2} />
                               {_getConditionValue(condition.id) && (
@@ -213,7 +214,7 @@ function ChartFilters(props) {
                                 )
                                   || new Date()}
                                 onChange={(date) => _onOptionSelected(formatISO(date), condition)}
-                                locale={enGB}
+                                locale={pt}
                                 color={secondary}
                               />
                             </div>

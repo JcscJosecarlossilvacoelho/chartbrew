@@ -931,16 +931,16 @@ function Chart(props) {
                 </Dropdown.Button>
                 <Dropdown.Menu>
                   <Dropdown.Item key="seconds">
-                    <Text onClick={() => setUpdateFreqType("seconds")}>Seconds</Text>
+                    <Text onClick={() => setUpdateFreqType("seconds")}>Segundos</Text>
                   </Dropdown.Item>
                   <Dropdown.Item key="minutes">
-                    <Text onClick={() => setUpdateFreqType("minutes")}>Minutes</Text>
+                    <Text onClick={() => setUpdateFreqType("minutes")}>minutos</Text>
                   </Dropdown.Item>
                   <Dropdown.Item key="hours">
-                    <Text onClick={() => setUpdateFreqType("hours")}>Hours</Text>
+                    <Text onClick={() => setUpdateFreqType("hours")}>Horas</Text>
                   </Dropdown.Item>
                   <Dropdown.Item key="days">
-                    <Text onClick={() => setUpdateFreqType("days")}>Days</Text>
+                    <Text onClick={() => setUpdateFreqType("days")}>Dias</Text>
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>

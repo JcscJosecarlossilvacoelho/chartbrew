@@ -1,71 +1,71 @@
 export const operators = [{
   key: "=",
-  text: "= (is)",
+  text: "= (é)",
   value: "is",
 }, {
   key: "≠",
-  text: "≠ (is not)",
+  text: "≠ (não é)",
   value: "isNot",
 }, {
   key: "!∅",
-  text: "!∅ (is not null)",
+  text: "!∅ (não é nulo)",
   value: "isNotNull",
 }, {
   key: "∅",
-  text: "∅ (is null)",
+  text: "∅ (é nulo)",
   value: "isNull",
 }, {
   key: ">",
-  text: "> (greater than)",
+  text: "> (maior que)",
   value: "greaterThan",
 }, {
   key: "≥",
-  text: "≥ (greater or equal)",
+  text: "≥ (maior ou igual)",
   value: "greaterOrEqual",
 }, {
   key: "<",
-  text: "< (less than)",
+  text: "< (menor que)",
   value: "lessThan",
 }, {
   key: "≤",
-  text: "≤ (less or equal)",
+  text: "≤ (menor ou igual)",
   value: "lessOrEqual",
 }, {
   key: "∈",
-  text: "∈ (contains)",
+  text: "∈ (contém)",
   value: "contains",
 }, {
   key: "∉",
-  text: "∉ (does not contain)",
+  text: "∉ (não contém)",
   value: "notContains",
 }];
 
 export const operations = [{
   key: "none",
-  text: "No operation",
+  text: "Nenhuma operação",
   value: "none",
 }, {
   key: "count",
-  text: "Count",
+  text: "Contagem",
   value: "count",
 }, {
   key: "count_unique",
-  text: "Count uniques",
+  text: "Contagem de únicos",
   value: "count_unique",
 }, {
   key: "sum",
-  text: "Sum",
+  text: "Soma",
   value: "sum",
 }, {
   key: "avg",
-  text: "Average",
+  text: "Média",
   value: "avg",
 }, {
   key: "min",
-  text: "Min",
+  text: "Mínimo",
   value: "min",
 }, {
   key: "max",
-  text: "Max",
+  text: "Máximo",
   value: "max",
 }];

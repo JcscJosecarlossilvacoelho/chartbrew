@@ -49,7 +49,7 @@ function TableContainer(props) {
   return (
     <div>
       <Row align="center" wrap="wrap">
-        {activeDataset && datasets.map((dataset) => {
+        {activeDataset && datasets.lengh > 0 &&  datasets.map((dataset) => {
           return (
             <>
               <Button
@@ -67,7 +67,6 @@ function TableContainer(props) {
             </>
           );
         })}
-        <Spacer x={0.2} />
         {!embedded && (
           <Button
             icon={expanded ? <ChevronUpCircle /> : <ChevronDownCircle />}
@@ -85,10 +84,10 @@ function TableContainer(props) {
             <Text>{`Total ${activeDataset.configuration.sum}:`}</Text>
             <Spacer x={0.3} />
             <Text b>{totalValue.toLocaleString()}</Text>
+            <Spacer y={0.5} />
           </div>
         )}
       </Row>
-      <Spacer y={0.5} />
       {activeDataset?.legend
         && tabularData[activeDataset.legend]
         && tabularData[activeDataset.legend].columns

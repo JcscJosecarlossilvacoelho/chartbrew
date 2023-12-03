@@ -14,7 +14,7 @@ import {
 const paginationOptions = [5, 10, 20, 30, 40, 50].map((pageSize) => ({
   key: pageSize,
   value: pageSize,
-  text: `Show ${pageSize}`,
+  text: `Mostrar ${pageSize}`,
 }));
 
 function TableComponent(props) {
@@ -35,7 +35,7 @@ function TableComponent(props) {
   } = useTable({
     columns,
     data,
-    initialState: { pageIndex: 0 }
+    initialState: { pageIndex: 0,pageSize:5 }
   },
   useSortBy,
   usePagination);
@@ -91,7 +91,7 @@ function TableComponent(props) {
             <Table.Body {...getTableBodyProps()}>
               {page.length < 1 && (
                 <Table.Row>
-                  <Table.Cell key="noresult">No Results</Table.Cell>
+                  <Table.Cell key="noresult">Sem Resultados</Table.Cell>
                 </Table.Row>
               )}
               {page.map((row) => {

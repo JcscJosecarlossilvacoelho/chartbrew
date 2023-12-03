@@ -45,13 +45,13 @@ const ruleTypes = [{
 }];
 
 const timePeriods = [{
-  label: "Minutes",
+  label: "Minutos",
   value: "minutes",
 }, {
-  label: "Hours",
+  label: "Horas",
   value: "hours",
 }, {
-  label: "Days",
+  label: "Dias",
   value: "days",
 }];
 

@@ -40,7 +40,7 @@ function KpiMode(props) {
     const { status, comparison } = c;
     return (
       <div>
-        <Tooltip content={`compared to last ${chart.timeInterval}`}>
+        <Tooltip content={`Comparado com o resultado anterior`}>
           <Container fluid>
             {status === "neutral" && (
               <Text b css={{ color: "$accents6" }}>{`${comparison}%`}</Text>

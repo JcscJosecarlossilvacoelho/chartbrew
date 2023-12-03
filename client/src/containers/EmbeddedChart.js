@@ -24,6 +24,7 @@ import RadarChart from "./Chart/components/RadarChart";
 import PolarChart from "./Chart/components/PolarChart";
 import logo from "../assets/logo_inverted.png";
 import useInterval from "../modules/useInterval";
+import KpiMode from "./Chart/components/KpiMode";
 
 const pageHeight = window.innerHeight;
 
@@ -77,27 +78,72 @@ function EmbeddedChart(props) {
 
     return moment(updatedAt).fromNow();
   };
+  useEffect(()=>{
+    if(Object.keys(chart).length !== 0 && conditions.length === 0 ){
+      _onAddFilter()
+    }
+  },[chart])
 
   const _onAddFilter = (condition) => {
-    let found = false;
-    const newConditions = conditions.map((c) => {
-      let newCondition = c;
-      if (c.id === condition.id) {
-        newCondition = condition;
-        found = true;
-      }
-      return newCondition;
-    });
-    if (!found) newConditions.push(condition);
+    let newConditions = []
+    if(conditions.length === 0 || condition === undefined){
+      const urlParams = new URLSearchParams(window.location.search);
+     const userId = urlParams.get('userid')
+      newConditions =[ {
+          "id": "c7be7fb1-5555-48e7-8b56-042faea7df7f",
+          "field": "root[].userCompanyId",
+          "operator": "is",
+          "value": userId,
+          "saved": true,
+          "displayValues": true,
+          "type": {
+            "key": "root[].userCompanyId",
+            "text": "userCompanyId",
+            "value": "root[].userCompanyId",
+            "type": "number",
+            "isObject": false,
+            "label": {
+              "style": {
+                "width": 55,
+                "textAlign": "center"
+              },
+              "content": "number",
+              "size": "mini",
+              "color": "primary"
+            }
+          },
+          "exposed": true,
+          "values": [
+            1,
+            2
+          ]
+      }]
+    }else{
+      let found = false;
+      newConditions = conditions.map((c) => {
+       let newCondition = c;
+       if (c.id === condition.id) {
+         newCondition = condition;
+         found = true;
+       }
+       return newCondition;
+     });
+     if (!found) newConditions.push(condition);
+    }
+    
     setConditions(newConditions);
 
     setDataLoading(true);
     runQueryWithFilters(chart.project_id, chart.id, newConditions)
       .then((data) => {
+        console.log("HERE")
+        console.log(data)
         setDataLoading(false);
         setChart(data);
       })
-      .catch(() => {
+      .catch((e) => {
+        console.log("eRROOO")
+        console.log(e)
         setDataLoading(false);
       });
   };
@@ -168,6 +214,7 @@ function EmbeddedChart(props) {
       </Container>
     );
   }
+  console.log(chart.type)
 
   return (
     <div style={styles.container}>
@@ -187,9 +234,8 @@ function EmbeddedChart(props) {
       <Container fluid css={{ pl: "$sm" }} style={styles.header(chart.type)} xl>
         <Row justify="space-between">
           <div style={{ display: "flex", alignItems: "center" }}>
-            <Text b size="1.1em" css={{ color: "$text", lineHeight: "$xs" }}>{chart.name}</Text>
-            <Spacer x={0.5} />
-            {chart.Datasets && conditions.map((c) => {
+            {/* <Text b size="1.1em" css={{ color: "$text", lineHeight: "$xs" }}>{chart.name}</Text> */}
+            {chart.Datasets && conditions.filter(x=>x.field !== 'root[].userCompanyId').map((c) => {
               return (
                 <Badge color="primary" variant={"flat"} key={c.id} size="sm" css={{ p: 0, pl: 5, pr: 5 }}>
                   {c.type !== "date" && `${c.value}`}
@@ -202,7 +248,6 @@ function EmbeddedChart(props) {
               );
             })}
           </div>
-
           {chart.chartData && (
             <div>
               <p>
@@ -225,12 +270,14 @@ function EmbeddedChart(props) {
                     </Popover.Content>
                   </Popover>
                 )}
+
               </p>
+              <Spacer y={0.5} />
+
             </div>
           )}
         </Row>
       </Container>
-      <Spacer y={0.5} />
       {chart.type === "line"
         && (
         <div>
@@ -283,11 +330,20 @@ function EmbeddedChart(props) {
         && (
         <div>
           <TableContainer
-            height={pageHeight - 100}
+            height={pageHeight - 1250}
             tabularData={chart.chartData}
             embedded
             datasets={chart.Datasets}
           />
+        </div>
+        )}
+         {chart.type === "avg"  && chart.chartData
+        && chart.chartData.data
+        && chart.chartData.data.datasets
+        &&
+         (
+        <div>
+                   <KpiMode chart={chart} />
         </div>
         )}
       <Spacer y={0.5} />
@@ -303,11 +359,11 @@ function EmbeddedChart(props) {
                     <Text small>{"Updating..."}</Text>
                   </>
                 )}
-                {!dataLoading && (
+                {/* {!dataLoading && (
                   <Text small i title="Last updated">
                     {`${_getUpdatedTime(chart.chartDataUpdated)}`}
                   </Text>
-                )}
+                )} */}
               </>
             )}
             {loading && (
@@ -318,20 +374,7 @@ function EmbeddedChart(props) {
               </>
             )}
           </div>
-          {chart.showBranding && (
-            <Link href="https://chartbrew.com" target="_blank" rel="noreferrer" css={{ color: "$primary", ai: "flex-end" }}>
-              <img
-                src={logo}
-                width="15"
-                alt="Chartbrew logo"
-              />
-              <Spacer x={0.2} />
-              <Text small css={{ color: "$accents6" }}>
-                <strong>Chart</strong>
-                brew
-              </Text>
-            </Link>
-          )}
+         
         </Row>
       </Container>
     </div>
@@ -342,10 +385,9 @@ const styles = {
   container: {
     flex: 1,
     backgroundColor: "transparent",
-    padding: 20,
   },
   header: (type) => ({
-    paddingBottom: type === "table" ? 10 : 0,
+    paddingBottom: type === "table" ? 0 : 0,
   }),
   loaderContainer: {
     minHeight: 100,
